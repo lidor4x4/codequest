@@ -157,7 +157,7 @@ return (
 
     <div className='flex flex-row justify-center items-center my-6 gap-4' ref={bottomRef}>
       <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`}>{error}</Alert>
-      <div className='w-full'>
+      <div className='w-[100svw]'>
         <TextInput
           value={message}
           onChange={(e) => setMessage(e.target.value)}
