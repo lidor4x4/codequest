@@ -67,6 +67,8 @@ export default function DevappHome() {
       
         } else {
           setError('You already have a conversation with this user');
+          push(`/devapp/message-hub/conversation/${partnerRequests.find(partnerRequest => partnerRequest.name === partnerName).userId}`);
+
         }
       })
 
@@ -80,7 +82,7 @@ export default function DevappHome() {
       {loading ? <h1>Loading...</h1> : 
       <div className='flex justify-center flex-col gap-4'>
         <div className='flex justify-center items-center flex-col gap-4'>
-        <h1 className='text-2xl mt-4 font-semibold'>Do you need a partner for your project?</h1>
+        <h1 className='text-2xl mt-16 font-semibold'>Do you need a partner for your project?</h1>
         <p className='text-md font-medium'>CodeQuest got you here you can post what your&apos;re looking for and people with these skills will be able to message you</p>
         <Link href="/devapp/post-partner"><Button>Post you own</Button></Link>
         </div>
@@ -88,7 +90,6 @@ export default function DevappHome() {
 
                     {partnerRequests.map((partnerRequest, index) => (
                       <Card className='flex flex-col gap-4' key={index}>
-                        <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`} >{error}, you can find it <Link className='underline' href={`/devapp/message-hub/conversation/${partnerRequest.userId}`}>Here</Link> </Alert>
                         <h1 className='text-xl font-semibold dark:text-white'>{partnerRequest.title}</h1>
                         <p className='text-md font-medium'>{partnerRequest.message}</p>
                         <p className='text-md font-medium'>Posted by: {partnerRequest.name}</p>
