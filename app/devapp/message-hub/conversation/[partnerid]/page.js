@@ -155,12 +155,13 @@ return (
       );
     })}
 
-    <div className='flex flex-row justify-center items-center my-6 gap-4' ref={bottomRef}>
+    <div className='flex flex-col justify-center items-center my-6 gap-4' ref={bottomRef}>
       <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`}>{error}</Alert>
       <div className=''>
         <TextInput
           value={message}
           size={50}
+          className='text-lg'
           onChange={(e) => setMessage(e.target.value)}
           placeholder='Type your message here'
           onKeyDown={handleKeyDown}
