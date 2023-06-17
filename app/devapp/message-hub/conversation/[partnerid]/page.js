@@ -165,9 +165,6 @@ return (
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div>
-        <Button onClick={sendMessage}>Send</Button>
-      </div>
     </div>
   </div>
 </div>
