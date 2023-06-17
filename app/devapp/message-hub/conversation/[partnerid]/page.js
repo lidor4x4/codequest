@@ -157,7 +157,7 @@ return (
 
     <div className='flex flex-row justify-center items-center my-6 gap-4' ref={bottomRef}>
       <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`}>{error}</Alert>
-      <div className='w-fit'>
+      <div className=''>
         <TextInput
           value={message}
           size={50}
