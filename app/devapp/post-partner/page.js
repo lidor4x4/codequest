@@ -15,21 +15,24 @@ export default function PostPartnerRequest() {
     const [message, setMessage] = useState('');
     const [created, setCreated] = useState(false);
     const [userId, setUserId] = useState(null);
+    const [userMap, setUserMap] = useState({});
+    const { getToken } = useAuth();
 
     useEffect(() => {
     fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
       .then(async data => {
         setUserId(data.userId)
+        const userIdEffect = data.userId;
         // get user name
         const jwt = await getToken();
-        fetch(`${process.env.BASE_URL}/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
+        fetch(`${process.env.BASE_URL}/devapp/api/get-user-by-id?userId=${data.userId}&token=${jwt}`, {
             method: 'GET',
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
             const user = data.user;
-            setName(user.firstName + ' ' + user.lastName);
+            setUserMap((prevUserMap) => ({ ...prevUserMap, [userIdEffect]: user }));
             })
             .catch((err) => console.log(err));
       })
@@ -41,6 +44,9 @@ export default function PostPartnerRequest() {
 
     const createPartnerRequest = async (e) => {
         e.preventDefault();
+        console.log(userMap);
+        const name = userMap[userId].firstName + ' ' + userMap[userId].lastName;
+        setName(userMap[userId].firstName + ' ' + userMap[userId].lastName );
         const partnerRequest = {
             name,
             title,

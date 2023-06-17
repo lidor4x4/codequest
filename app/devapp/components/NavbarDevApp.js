@@ -27,7 +27,7 @@ export default function NavbarDevApp() {
             Project Collaboration
           </p>
         </Navbar.Link>
-        <Navbar.Link href="/devapp/message/hub">
+        <Navbar.Link href="/devapp/message-hub">
           Message Hub
         </Navbar.Link>
         <Navbar.Link href="#">

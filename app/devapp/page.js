@@ -5,6 +5,7 @@ import Navbar from './components/NavbarDevApp';
 import { Alert, Button, Card } from 'flowbite-react';
 import Link from 'next/link';
 import { firestore } from '../../firebase/config';
+import { useRouter } from 'next/navigation';
 
 export default function DevappHome() {
 
@@ -13,11 +14,10 @@ export default function DevappHome() {
     const [userId, setUserId] = useState(null);
     const [partnerId, setPartnerId] = useState(null);
     const [error, setError] = useState('');
+    const { push } = useRouter();
 
 
-    const getAllPartnerRequests = async () => {
-;
-    }
+
 
     useEffect(() => {
       async function getAllPartnerRequests() {
@@ -61,6 +61,8 @@ export default function DevappHome() {
       }
         await firestore.collection('conversations').add(conversation);
         console.log('conversation created');
+        // redirect to the conversation page
+        push(`/devapp/message-hub/conversation/${partnerRequests.find(partnerRequest => partnerRequest.name === partnerName).userId}`);
       
         } else {
           setError('You already have a conversation with this user');
