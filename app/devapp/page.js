@@ -6,6 +6,7 @@ import { Alert, Button, Card } from 'flowbite-react';
 import Link from 'next/link';
 import { firestore } from '../../firebase/config';
 import { useRouter } from 'next/navigation';
+require('dotenv').config();
 
 export default function DevappHome() {
 

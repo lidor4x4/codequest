@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 require('dotenv').config();
 
-dotenv.config()
 
 const inter = Inter({ subsets: ['latin'] })
 

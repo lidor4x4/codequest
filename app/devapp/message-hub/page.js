@@ -7,6 +7,7 @@ import { TextInput, Button, Card } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { firestore } from '../../../firebase/config';
 import { useAuth } from '@clerk/nextjs';
+require('dotenv').config();
 
 export default function MessageHub() {
   const [conversations, setConversations] = useState([]);
