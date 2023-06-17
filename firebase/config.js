@@ -3,13 +3,14 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
+  apiKey: "AIzaSyB_MTVP_BKVoBMvc7t804Dg8fLIUKzGRRY",
+  authDomain: "codequest-e714b.firebaseapp.com",
+  projectId: "codequest-e714b",
+  storageBucket: "codequest-e714b.appspot.com",
+  messagingSenderId: "891702875582",
+  appId: "1:891702875582:web:5be6b9c58f0e833eb295ef"
 };
+
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);

@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from 'react'
 import Navbar from './components/NavbarDevApp';
-import { Button, Card } from 'flowbite-react';
+import { Alert, Button, Card } from 'flowbite-react';
 import Link from 'next/link';
 import { firestore } from '@/firebase/config';
 
@@ -12,6 +12,7 @@ export default function DevappHome() {
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
     const [partnerId, setPartnerId] = useState(null);
+    const [error, setError] = useState('');
 
 
     const getAllPartnerRequests = async () => {
@@ -36,13 +37,28 @@ export default function DevappHome() {
 
 
     const createConversation = async (partnerName) => {
-      const conversation = {
+      //  check if the conversation already exists between the two users
+      const conversationSnapshot = await firestore.collection('conversations')
+      conversationSnapshot.where('users', 'array-contains', userId)
+      conversationSnapshot.where('users', 'array-contains', partnerRequests.find(partnerRequest => partnerRequest.name === partnerName).userId)
+      .get()
+      .then(async (querySnapshot) => {
+        if (querySnapshot.empty) {
+          // create the conversation
+                const conversation = {
         createdAt: new Date(),
-        messagesUser1: [],
-        messagesUser2: [],
+        messages: [],
         users: [userId, partnerRequests.find(partnerRequest => partnerRequest.name === partnerName).userId]
       }
-      await firestore.collection('conversations').add(conversation);
+        await firestore.collection('conversations').add(conversation);
+        console.log('conversation created');
+      
+        } else {
+          setError('You already have a conversation with this user');
+        }
+      })
+
+
     }
 
 
@@ -60,6 +76,7 @@ export default function DevappHome() {
 
                     {partnerRequests.map((partnerRequest, index) => (
                       <Card className='flex flex-col gap-4' key={index}>
+                        <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`} >{error}, you can find it <Link className='underline' href={`/devapp/message-hub/conversation/${partnerRequest.userId}`}>Here</Link> </Alert>
                         <h1 className='text-xl font-semibold'>{partnerRequest.title}</h1>
                         <p className='text-md font-medium'>{partnerRequest.message}</p>
                         <p className='text-md font-medium'>Posted by: {partnerRequest.name}</p>

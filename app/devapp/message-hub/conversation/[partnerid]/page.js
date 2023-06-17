@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
-import { Button, Card, TextInput } from 'flowbite-react';
+import { Button, Card, TextInput, Alert } from 'flowbite-react';
 import { firestore } from '@/firebase/config';
 import NavbarDevApp from '@/app/devapp/components/NavbarDevApp';
 
@@ -14,6 +14,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState()
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [listener, setListener] = useState(0);
   const { getToken } = useAuth();
   const [userMap, setUserMap] = useState({});
@@ -80,7 +81,12 @@ export default function ChatRoom() {
   }, [messages]);
 
     const sendMessage = async () => {
-        // add the message to the messages array
+        // check to see if the message isnt empty
+        if (message === '') {
+            setError('Please enter a message');
+            return;
+        }
+
         
         // get the conversation snapshot
         const conversationSnapshot = await firestore.collection('conversations')
@@ -100,6 +106,7 @@ export default function ChatRoom() {
             });
             setListener(listener + 1);
             setMessage('');
+            setError('');
             })
         
     
@@ -119,42 +126,51 @@ return (
     {loading ? (
       <h1>Loading...</h1>
     ) : (
-      <div className='flex justify-center items-center flex-col'>
-        <h1 className='text-2xl mt-4 text-center'>
-          Chat with{' '}
-          {userMap[partnerid]?.firstName && userMap[partnerid]?.lastName
-            ? `${userMap[partnerid].firstName} ${userMap[partnerid].lastName}`
-            : 'Loading...'}
-        </h1>
-        <div>
-          {/* render the messages here */}
-          {messages.map((message, index) => {
-            return (
-              <div className={`flex flex-col ${message[0] === userID ? 'justify-start items-start ml-4' : 'justify-end items-end mr-4'}`} key={index}>
-                <p className='p-1 my-4  text-white bg-blue-500 rounded-md'>
-                  {message[0] !== userID
-                    ? userMap[partnerid]?.firstName &&
-                      userMap[partnerid]?.lastName
-                      ? `${userMap[partnerid].firstName} ${userMap[partnerid].lastName}`
-                      : 'Loading...'
-                    : 'You'}
-                </p>
-                <Card>{message[1]}</Card>
-              </div>
-            );
-          })}
+<div className='flex flex-col justify-center items-center'>
+  <h1 className='text-2xl mt-4 text-center'>
+    Chat with{' '}
+    {userMap[partnerid]?.firstName && userMap[partnerid]?.lastName
+      ? `${userMap[partnerid].firstName} ${userMap[partnerid].lastName}`
+      : 'Loading...'}
+  </h1>
+  <div className='w-full mx-auto'>
+    {/* render the messages here */}
+    {messages.map((message, index) => {
+      const isUserMessage = message[0] === userID;
+      const partnerUser = userMap[partnerid];
 
-          <div className='flex flex-row justify-center items-center my-6 gap-4' ref={bottomRef} >
-            <TextInput
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder='Type your message here'
-                onKeyDown={handleKeyDown}
-            />
-            <Button onClick={sendMessage}>Send</Button>
-          </div>
+      return (
+        <div
+          className={`flex flex-col ${
+            isUserMessage ? 'justify-start items-start ml-4' : 'justify-end items-end mr-4'
+          }`}
+          key={index}
+        >
+          <p className='py-1 px-2 my-4  text-white bg-blue-500 rounded-md'>
+            {isUserMessage ? 'You' : partnerUser ? `${partnerUser.firstName} ${partnerUser.lastName}` : 'Loading...'}
+          </p>
+          <Card>{message[1]}</Card>
         </div>
+      );
+    })}
+
+    <div className='flex flex-row justify-center items-center my-6 gap-4' ref={bottomRef}>
+      <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`}>{error}</Alert>
+      <div className='w-full'>
+        <TextInput
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder='Type your message here'
+          onKeyDown={handleKeyDown}
+        />
       </div>
+      <div>
+        <Button onClick={sendMessage}>Send</Button>
+      </div>
+    </div>
+  </div>
+</div>
+
     )}
   </>
 );
