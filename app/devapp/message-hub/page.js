@@ -18,7 +18,7 @@ export default function MessageHub() {
   const { push } = useRouter();
 
   useEffect(() => {
-    fetch('http://localhost:3000/devapp/api/get-user-id')
+    fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
       .then(async data => {
         const userId = data.userId;
@@ -38,7 +38,7 @@ export default function MessageHub() {
 
   const getUserById = async (ID) => {
     const jwt = await getToken();
-    fetch(`http://localhost:3000/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
+    fetch(`${process.env.BASE_URL}/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
       method: 'GET',
     })
       .then((res) => res.json())

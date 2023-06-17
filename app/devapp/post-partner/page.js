@@ -15,7 +15,7 @@ export default function PostPartnerRequest() {
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-    fetch('http://localhost:3000/devapp/api/get-user-id')
+    fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
       .then(data => setUserId(data.userId))
       .catch(err => console.log(err));

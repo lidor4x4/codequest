@@ -27,7 +27,7 @@ export default function ChatRoom() {
 
         const getMessages = async (ID) => {
         // fetch the user id from the api
-        const res = await fetch('http://localhost:3000/devapp/api/get-user-id');
+        const res = await fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`);
         const data = await res.json();
         console.log(data.userId);
         const userIDEffect = data.userId;
@@ -35,7 +35,7 @@ export default function ChatRoom() {
 
         // get the partner ID
         const jwt = await getToken();
-        fetch(`http://localhost:3000/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
+        fetch(`${process.env.BASE_URL}/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
             method: 'GET',
         })
             .then((res) => res.json())

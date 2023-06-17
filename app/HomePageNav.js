@@ -8,7 +8,7 @@ export default function HomePageNav() {
       fluid
       rounded
     >
-      <Navbar.Brand href="https://flowbite-react.com">
+      <Navbar.Brand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Code Quest
         </span>

@@ -27,7 +27,7 @@ export default function DevappHome() {
     useEffect(() => {
       getAllPartnerRequests();
       // fetch the user id from /api/get-user-id
-      fetch('http://localhost:3000/devapp/api/get-user-id')
+      fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
       .then(data => setUserId(data.userId))
       .catch(err => console.log(err));

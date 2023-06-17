@@ -10,7 +10,7 @@ export default function NavbarDevApp() {
       rounded
       className='fixed top-0 left-0 right-0 z-50  dark:bg-gray-800 dark:text-white'
     >
-      <Navbar.Brand href="https://flowbite-react.com">
+      <Navbar.Brand href="/devapp">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           <p>CodeQuest</p>
         </span>
@@ -27,7 +27,7 @@ export default function NavbarDevApp() {
             Project Collaboration
           </p>
         </Navbar.Link>
-        <Navbar.Link href="#">
+        <Navbar.Link href="/devapp/message/hub">
           Message Hub
         </Navbar.Link>
         <Navbar.Link href="#">
@@ -36,7 +36,7 @@ export default function NavbarDevApp() {
         <Navbar.Link href="#">
           Pricing
         </Navbar.Link>
-        <Navbar.Link href="#">
+        <Navbar.Link href="/contact">
           Contact
         </Navbar.Link>
       </Navbar.Collapse>
