@@ -5,6 +5,8 @@ import Navbar from '../components/NavbarDevApp';
 import { Button, Label, TextInput, Alert } from 'flowbite-react';
 import { firestore } from '../../../firebase/config';
 import Link from 'next/link';
+import { useAuth } from '@clerk/nextjs';
+
 
 export default function PostPartnerRequest() {
 
@@ -17,7 +19,20 @@ export default function PostPartnerRequest() {
     useEffect(() => {
     fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
-      .then(data => setUserId(data.userId))
+      .then(async data => {
+        setUserId(data.userId)
+        // get user name
+        const jwt = await getToken();
+        fetch(`${process.env.BASE_URL}/devapp/api/get-user-by-id?userId=${ID}&token=${jwt}`, {
+            method: 'GET',
+        })
+            .then((res) => res.json())
+            .then((data) => {
+            const user = data.user;
+            setName(user.firstName + ' ' + user.lastName);
+            })
+            .catch((err) => console.log(err));
+      })
       .catch(err => console.log(err));
 
     }, [])
@@ -46,19 +61,6 @@ export default function PostPartnerRequest() {
              <form className="flex w-1/4 flex-col gap-4 mt-16">
               {created ? <Alert color="info"> <span> <p> <span className="font-medium"> Good Job </span> Partner request created <a className='underline'><Link href="/devapp">Go back</Link></a> </p> </span> </Alert> : null }
       <div className=''>
-        <div className="mb-2 block ">
-          <Label
-            htmlFor="name"
-            value="Your name"
-          />
-        </div>
-        <TextInput
-          id="name"
-          placeholder="Name"
-          required
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-        />
       </div>
       <div>
         <div className="mb-2 block">

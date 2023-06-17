@@ -16,23 +16,32 @@ export default function DevappHome() {
 
 
     const getAllPartnerRequests = async () => {
-        const partnerRequests = await firestore.collection('partnerRequests').get();
-        const partnerRequestsArray = partnerRequests.docs.map(doc => doc.data());
-        // sort the array by date
-        partnerRequestsArray.sort((a, b) => b.createdAt - a.createdAt);
-        setPartnerRequests(partnerRequestsArray);
-        setLoading(false);
+;
     }
 
     useEffect(() => {
+      async function getAllPartnerRequests() {
+        // fetch the user id from /api/get-user-id
+        fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
+          .then(res => res.json())
+          .then(data => setUserId(data.userId))
+          .catch(err => console.log(err));
+
+        // get all partner requests
+        const partnerRequests = await firestore.collection('partnerRequests').get();
+        let partnerRequestsArray = partnerRequests.docs.map(doc => doc.data());
+        // sort the array by date
+        partnerRequestsArray.sort((a, b) => b.createdAt - a.createdAt);
+        // remove requests that have been posted by the user
+        console.log(partnerRequestsArray, userId, partnerRequestsArray.filter(partnerRequest => partnerRequest.userId !== userId));
+        partnerRequestsArray = partnerRequestsArray.filter(partnerRequest => partnerRequest.userId !== userId);
+
+        setPartnerRequests(partnerRequestsArray);
+        setLoading(false)
+        console.log(partnerRequests);
+      }
       getAllPartnerRequests();
-      // fetch the user id from /api/get-user-id
-      fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
-      .then(res => res.json())
-      .then(data => setUserId(data.userId))
-      .catch(err => console.log(err));
-      console.log(partnerRequests);
-    }, [])
+    }, [userId]);
     
 
 
