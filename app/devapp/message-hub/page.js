@@ -18,8 +18,7 @@ export default function MessageHub() {
   const { push } = useRouter();
 
   useEffect(() => {
-    console.log(`${process.env.BASE_URL}/devapp/api/get-user-id`);
-    fetch(`https://codequest-6ftym0izd-lidor4x4.vercel.app/devapp/api/get-user-id`)
+    fetch(`${process.env.BASE_URL}/devapp/api/get-user-id`)
       .then(res => res.json())
       .then(async data => {
         const userId = data.userId;
