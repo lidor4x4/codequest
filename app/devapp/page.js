@@ -88,10 +88,10 @@ export default function DevappHome() {
                     {partnerRequests.map((partnerRequest, index) => (
                       <Card className='flex flex-col gap-4' key={index}>
                         <Alert className={`${error.length === 0 ? 'hidden' : 'block'}`} >{error}, you can find it <Link className='underline' href={`/devapp/message-hub/conversation/${partnerRequest.userId}`}>Here</Link> </Alert>
-                        <h1 className='text-xl font-semibold'>{partnerRequest.title}</h1>
+                        <h1 className='text-xl font-semibold dark:text-white'>{partnerRequest.title}</h1>
                         <p className='text-md font-medium'>{partnerRequest.message}</p>
                         <p className='text-md font-medium'>Posted by: {partnerRequest.name}</p>
-                        <Button onClick={() => {
+                        <Button  onClick={() => {
                           createConversation(partnerRequest.name);
                         }}>Message</Button>
                       </Card>

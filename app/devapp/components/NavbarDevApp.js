@@ -2,8 +2,11 @@
 
 import { Dropdown, Navbar, Avatar } from 'flowbite-react';
 import { UserButton } from "@clerk/nextjs";
+import { Moon, Sun } from 'heroicons-react';
 
 export default function NavbarDevApp() {
+
+
   return (
     <Navbar
       fluid
@@ -12,7 +15,7 @@ export default function NavbarDevApp() {
     >
       <Navbar.Brand href="/devapp">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          <p>CodeQuest</p>
+          <p >CodeQuest</p>
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
@@ -21,10 +24,10 @@ export default function NavbarDevApp() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link
-          href="#"
+          href="/devapp"
         >
           <p>
-            Project Collaboration
+            Find  a Partner
           </p>
         </Navbar.Link>
         <Navbar.Link href="/devapp/message-hub">
