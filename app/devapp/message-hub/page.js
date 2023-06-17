@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import NavbarDevApp from '../components/NavbarDevApp';
 import { TextInput, Button, Card } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
-import { firestore } from '@/firebase/config';
+import { firestore } from '../../../firebase/config';
 import { useAuth } from '@clerk/nextjs';
 
 export default function MessageHub() {

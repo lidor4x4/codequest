@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react'
 import Navbar from './components/NavbarDevApp';
 import { Alert, Button, Card } from 'flowbite-react';
 import Link from 'next/link';
-import { firestore } from '@/firebase/config';
+import { firestore } from '../../firebase/config';
 
 export default function DevappHome() {
 

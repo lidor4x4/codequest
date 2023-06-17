@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from 'react'
 import Navbar from '../components/NavbarDevApp';
 import { Button, Label, TextInput, Alert } from 'flowbite-react';
-import { firestore } from '@/firebase/config';
+import { firestore } from '../../../firebase/config';
 import Link from 'next/link';
 
 export default function PostPartnerRequest() {
