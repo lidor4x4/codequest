@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 import { Button, Card, TextInput, Alert } from 'flowbite-react';
-import { firestore } from '@/firebase/config';
+import { firestore } from '../../../../../firebase/config';
 import NavbarDevApp from 'app/devapp/components/NavbarDevApp';
 
 export default function ChatRoom() {
